@@ -123,7 +123,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Creation:', function() {
+  describe('Account Creation:', function() {
 
     it('signup creates a new user record', function(done) {
       var options = {
@@ -185,6 +185,7 @@ describe('', function() {
         request(options, function(err, response, resBody) {
           if (err) { return done(err); }
           expect(response.headers.location).to.equal('/signup');
+          // console.log('spec log: ', response.headers);
           done();
         });
       });
@@ -208,7 +209,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Login:', function() {
+  describe('Account Login:', function() {
 
     beforeEach(function(done) {
       var options = {

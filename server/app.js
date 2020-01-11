@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const Auth = require('./middleware/auth');
 const models = require('./models');
 
+
 const app = express();
 
 app.set('views', `${__dirname}/views`);
@@ -17,18 +18,19 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 
-app.get('/', 
-(req, res) => {
+app.get('/', (req, res) => {
+  res.render('index');
+
+});
+app.get('/signup', (req, res) => {
+  res.render('signup');
+
+});
+app.get('/create', (req, res) => {
   res.render('index');
 });
 
-app.get('/create', 
-(req, res) => {
-  res.render('index');
-});
-
-app.get('/links', 
-(req, res, next) => {
+app.get('/links', (req, res, next) => {
   models.Links.getAll()
     .then(links => {
       res.status(200).send(links);
@@ -38,8 +40,7 @@ app.get('/links',
     });
 });
 
-app.post('/links', 
-(req, res, next) => {
+app.post('/links', (req, res, next) => {
   var url = req.body.url;
   if (!models.Links.isValidUrl(url)) {
     // send back a 404 if link is not valid
@@ -77,7 +78,40 @@ app.post('/links',
 /************************************************************/
 // Write your authentication routes here
 /************************************************************/
+app.post('/signup', (req, res, next) => {
+  //console.log('req body: ', req.body);
+  //console.log('our obj;', models.Users.create(req.body));
+  models.Users.create(req.body)
+    .then(() => { res.redirect('/'); })
+    .then(() => { res.end(); })
+    .catch(function (err) {
+      res.redirect('/signup');
+    });
 
+});
+app.post('/login', (req, res, next) => {
+  //console.log('what am i', models.Users.get(req.body));
+  models.Users.get(req.body)
+    .then((user) => {
+      console.log('user', user)
+      if (!user) {
+        res.redirect('/login');
+      }
+      return user;
+    })
+    .then((user) => )
+    .then(() => { res.redirect('/'); }) // if username exists redirect to index;
+    // if (req.body)
+    //.then(() => {console.log('get in then', models.Users.get(req.body));})
+    .catch(function (err) {
+      // if (err.code === 'ER_DUP_ENTRY') {
+      //if (password !== compare values) {
+      // res.redirect('/login')
+      //  } else {
+
+    })
+    .then(() => { res.end(); });
+});
 
 
 /************************************************************/

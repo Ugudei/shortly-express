@@ -44,6 +44,12 @@ class Users extends Model {
 
     return super.create.call(this, newUser);
   }
+  get({ username }) {
+    let user = {
+      username
+    };
+    return super.get.call(this, user);
+  }
 }
 
 module.exports = new Users();
