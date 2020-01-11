@@ -93,13 +93,16 @@ app.post('/login', (req, res, next) => {
   //console.log('what am i', models.Users.get(req.body));
   models.Users.get(req.body)
     .then((user) => {
-      console.log('user', user)
       if (!user) {
         res.redirect('/login');
       }
       return user;
     })
-    .then((user) => )
+    .then((user) => {
+      if (!models.Users.compare(req.body.password, user.password, user.salt)) {
+        res.redirect('/login');
+      }
+    })
     .then(() => { res.redirect('/'); }) // if username exists redirect to index;
     // if (req.body)
     //.then(() => {console.log('get in then', models.Users.get(req.body));})
