@@ -16,7 +16,7 @@ const parseCookies = (req, res, next) => {
       req.cookies[key] = value;
     }
   }
-  res.end();
+  //res.end();
   next();
   // res.cookies = parsedCookies;
 

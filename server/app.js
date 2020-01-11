@@ -104,14 +104,7 @@ app.post('/login', (req, res, next) => {
       }
     })
     .then(() => { res.redirect('/'); }) // if username exists redirect to index;
-    // if (req.body)
-    //.then(() => {console.log('get in then', models.Users.get(req.body));})
     .catch(function (err) {
-      // if (err.code === 'ER_DUP_ENTRY') {
-      //if (password !== compare values) {
-      // res.redirect('/login')
-      //  } else {
-
     })
     .then(() => { res.end(); });
 });
